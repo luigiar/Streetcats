@@ -3,11 +3,17 @@ const express =require('express');
 const cors = require('cors'); 
 const {pool} = require('./config/db'); //import della connessione al database
 
+
+const authRoutes = require('./routes/authRoutes.js'); //import delle rotte di autenticazione
+
+
 const app = express();
 
 // MIDDLEWARE
 app.use(cors()); //permette al frontend angular di fare richieste senza blocchi cors.
 app.use(express.json()); //permette al server di leggere i dati in formato json.
+
+app.use('/api/auth', authRoutes);
 
 //rotta di toDateString();
 app.get('/', async (req,res) => {
