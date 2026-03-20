@@ -12,7 +12,7 @@ const app = express();
 // MIDDLEWARE
 app.use(cors()); //permette al frontend angular di fare richieste senza blocchi cors.
 app.use(express.json()); //permette al server di leggere i dati in formato json.
-
+app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 
 //rotta di toDateString();
