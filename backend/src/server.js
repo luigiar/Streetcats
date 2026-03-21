@@ -5,7 +5,7 @@ const {pool} = require('./config/db'); //import della connessione al database
 
 
 const authRoutes = require('./routes/authRoutes.js'); //import delle rotte di autenticazione
-
+const catRoutes = require('./routes/catRoutes.js'); //import delle rotte per i gatti
 
 const app = express();
 
@@ -14,6 +14,7 @@ app.use(cors()); //permette al frontend angular di fare richieste senza blocchi 
 app.use(express.json()); //permette al server di leggere i dati in formato json.
 app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
+app.use('/api/cats', catRoutes);
 
 //rotta di toDateString();
 app.get('/', async (req,res) => {
