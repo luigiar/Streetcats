@@ -6,6 +6,7 @@ const {pool} = require('./config/db'); //import della connessione al database
 
 const authRoutes = require('./routes/authRoutes.js'); //import delle rotte di autenticazione
 const catRoutes = require('./routes/catRoutes.js'); //import delle rotte per i gatti
+const commentRoutes = require('./routes/commentRoutes.js'); //import delle rotte per i commenti
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json()); //permette al server di leggere i dati in formato json.
 app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 app.use('/api/cats', catRoutes);
+app.use('/api/comments', commentRoutes);
 
 //rotta di toDateString();
 app.get('/', async (req,res) => {
