@@ -1,0 +1,17 @@
+.map-container {
+  /* Prende tutta l'altezza dello schermo, meno l'altezza della navbar) */
+  height: calc(100vh - 56px);
+  width: 100%;
+}
+
+/* Forzatura la visualizzazione delle immagini dei marker */
+::ng-deep .leaflet-marker-icon {
+    display: block !important;
+    width: 25px !important;
+    height: 41px !important;
+}
+
+
+::ng-deep .leaflet-marker-shadow {
+    display: block !important;
+}

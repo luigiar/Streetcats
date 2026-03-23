@@ -9,6 +9,4 @@ const getAllCats = async () => {
   return await catRepo.findAllCats();
 };
 
-module.exports = {addCat, get property () {
-  
-}}
+module.exports = {addCat, getAllCats};
