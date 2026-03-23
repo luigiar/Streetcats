@@ -6,7 +6,7 @@
       <div class="map-container"
            leaflet
            [leafletOptions]="options"
-           [leafletLayers]="layers"
+           [leafletLayers]="layers()"
            (leafletMapReady)="onMapReady($any($event))">
       </div>
     </div>

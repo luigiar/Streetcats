@@ -1,74 +1,82 @@
-import { Component} from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core'; // import dei signals
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { latLng, tileLayer, MapOptions, marker, icon, Marker, Map as LeafletMap} from 'leaflet';
+import { LeafletModule } from '@bluehalo/ngx-leaflet';
+import { latLng, tileLayer, MapOptions, marker, icon, Marker, Map as LeafletMap } from 'leaflet';
 import { CatService } from '../../services/cat.service';
-
+import { Cat } from '../../models/cat.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LeafletModule],
+  imports: [CommonModule, LeafletModule, NavbarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-
 export class HomeComponent {
+  // Opzioni della mappa
   options: MapOptions = {
     layers: [
-    tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: '© OpenStreetMap contributors'
-    })
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap contributors'
+      })
     ],
-    zoom: 6, //zoom iniziale
-    center: latLng(41.9028, 12.4964) //centro iniziale (Roma)
-};
-  layers: Marker[] = [];
+    zoom: 6,
+    center: latLng(41.9028, 12.4964)
+  };
+
+  // layers è un signal che contiene un array di Marker
+  layers: WritableSignal<Marker[]> = signal([]);
+
+  // Icona dei gatti
   catIcon = icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34]
-});
+    iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  });
 
-//variabile per salvare la mappa
-private map!: LeafletMap;
+  private map!: LeafletMap;
 
-  //inietto il service Cat nel componente
+
   constructor(private catService: CatService) {
-    console.log('🏗️ 1. Costruttore OK');
-    console.log('🗺️ 2. Opzioni mappa caricate:', this.options);
+    console.log('🏗️ 1. Costruttore Angular 19 OK (Signals ready)');
   }
-  onMapReady(map: any) {
+
+  onMapReady(map: LeafletMap) {
     console.log('🟢 La mappa è pronta! Sto per chiamare il server...');
-    this.map = map as LeafletMap;
+    this.map = map;
     this.caricaGatti();
   }
 
+  caricaGatti() {
+    this.catService.getCats().subscribe({
+      next: (cats: Cat[]) => {
+        console.log('🐈 Gatti ricevuti dal server:', cats);
 
-caricaGatti() {
-  this.catService.getCats().subscribe({
-    next: (cats) => {
-      console.log('🐈 Gatti ricevuti:', cats);
+        const nuoviMarker = cats.map(cat => {
+          // la lattudine e longitudine potrebbero essere stringhe
+          const lat = typeof cat.latitude === 'string' ? parseFloat(cat.latitude) : cat.latitude;
+          const lng = typeof cat.longitude === 'string' ? parseFloat(cat.longitude) : cat.longitude;
 
-      // Crezione dei marker
-      const nuoviMarker = cats.map(cat => {
-        const lat = Number(cat.latitude);
-        const lng = Number(cat.longitude);
+          if (isNaN(lat) || isNaN(lng)) {
+            console.warn(`⚠️ Coordinate non valide per il gatto "${cat.title}":`, lat, lng);
+            return null;
+          }
 
-        const m = marker([lat, lng], { icon: this.catIcon });
-        m.bindPopup(`<b>${cat.title}</b>`);
-        return m;
-      });
+          const m = marker([lat, lng], { icon: this.catIcon });
+          m.bindPopup(`<b>${cat.title}</b><br>Gatto di quartiere 🐾`);
+          return m;
+        });
 
-      // creazione di un nuovo array di marker e assegnazione a this.layers
-      this.layers = [...nuoviMarker];
+        // aggiornamento dei signal
+        this.layers.set(nuoviMarker.filter(m => m !== null) as Marker[]);
 
-      console.log('✅ Marker pronti:', this.layers.length);
-    }
-  });
+        console.log('✅ Signal dei marker aggiornato:', this.layers().length);
+      },
+      error: (err) => console.error('❌ Errore caricamento gatti:', err)
+    });
+  }
 }
-}
-
