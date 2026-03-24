@@ -1,0 +1,120 @@
+/* Stili personalizzati per StreetCats Registration */
+
+/* Palette Colori StreetCats (Esempio: un blu più morbido) */
+:host{
+  --sc-primary-color: #5c7cfa; /* Un blu più "pastello" e amichevole */
+  --sc-bg-color: #f8f9fc;
+}
+
+body {
+  background-color: var(--sc-bg-color);
+}
+
+.sc-register-card {
+  border-radius: 20px; /* Bordi molto arrotondati */
+  border: none;
+  overflow: hidden; /* Assicura che i bordi arrotondati siano mantenuti */
+}
+
+.sc-register-card .card-body {
+  background: white;
+}
+
+/* Header con Icona Gatto */
+.sc-form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.sc-brand-icon {
+  font-size: 3.5rem;
+  color: var(--sc-primary-color);
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  /* Piccola animazione all'icona */
+  animation: pawSwing 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pawSwing {
+  from { transform: rotate(-5deg); }
+  to { transform: rotate(5deg); }
+}
+
+/* Floating Labels Personalizzati */
+.form-floating > .form-control {
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-floating > .form-control:focus {
+  border-color: var(--sc-primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(92, 124, 250, 0.15); /* Ombra morbida del colore brand */
+}
+
+/* Feedback Visivo Integrato (Checkmark e Croce) */
+.sc-form-group-feedback {
+  position: relative;
+}
+
+/* Icone di stato all'interno dei campi */
+.sc-status-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: opacity 0.2s;
+  opacity: 0;
+  font-size: 1.2rem;
+}
+
+/* Mostra l'icona quando lo stato è attivo (usando le classi di Bootstrap) */
+.form-control.is-valid + .sc-status-icon-valid {
+  opacity: 1;
+  color: #28a745;
+}
+
+.form-control.is-invalid + .sc-status-icon-invalid {
+  opacity: 1;
+  color: #dc3545;
+}
+
+/* Pulsante Registrati Personalizzato */
+.sc-btn-register {
+  background-color: var(--sc-primary-color) !important;
+  color: white; !important;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.sc-btn-register:hover:not(:disabled) {
+  background-color: #4c6ef5 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(92, 124, 250, 0.3);
+}
+
+
+.sc-btn-register:disabled {
+  background-color: #e2e6ea !important; /* griogio solido */
+  color: #6c757d !important;          /* Testo grigio medio */
+  cursor: not-allowed;
+  transform: none !important;         /* Niente animazioni se disabilitato */
+  box-shadow: none !important;
+}
+
+
+/* Link Accedi sotto il form */
+.sc-login-link {
+  color: var(--sc-primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.sc-login-link:hover {
+  text-decoration: underline;
+}

@@ -8,7 +8,7 @@ const registerUser = async (username, email, password) => {
 //chiedo al repo se esiste già un utente 
 const existingUser = await authRepo.findUserByEmailOrUsername(email, username);
 
-if (existingUsers.length > 0) {
+if (existingUser.length > 0) {
     throw new Error('Email o username già in uso');
 
   }
