@@ -1,79 +1,87 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-7 col-lg-6 col-xl-5"> <div class="card sc-register-card shadow-lg"> <div class="card-body p-5"> <div class="sc-form-header">
-            <div class="sc-brand-icon">🐾</div> <h2 class="h1 font-weight-bold">Unisciti a noi!</h2>
-            <p class="text-muted">Crea il tuo account StreetCats</p>
-          </div>
+<div class="auth-wrapper">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-7 col-lg-6 col-xl-5">
+        <div class="card sc-register-card">
+          <div class="card-body p-4 p-sm-5">
 
-          @if (errorMessage) {
-            <div class="alert alert-danger mb-4 shadow-sm border-0 text-center" role="alert">
-              {{ errorMessage }}
-            </div>
-          }
-
-          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="needs-validation">
-
-            <div class="form-floating mb-3 sc-form-group-feedback">
-              <input type="text" id="username" name="username" autocomplete="username"
-                     class="form-control" formControlName="username"
-                     placeholder="Nome Utente" [ngClass]="{ 'is-invalid': f['username'].touched && f['username'].invalid, 'is-valid': f['username'].touched && f['username'].valid }">
-              <label for="username">Nome Utente</label>
-
-              <span class="sc-status-icon sc-status-icon-valid bi bi-check-lg">✓</span>
-              <span class="sc-status-icon sc-status-icon-invalid bi bi-x-lg">✗</span>
-
-              @if (f['username'].touched && f['username'].invalid) {
-                <div class="invalid-feedback ps-2">
-                  @if (f['username'].errors?.['required']) { <span>Campo obbligatorio</span> }
-                  @if (f['username'].errors?.['minlength']) { <span>Almeno 3 caratteri</span> }
-                </div>
-              }
+            <div class="sc-form-header">
+              <div class="sc-brand-icon">🐾</div>
+              <h2 class="h2 app-title mb-1">Unisciti a noi!</h2>
+              <p class="text-muted">Crea il tuo account StreetCats</p>
             </div>
 
-            <div class="form-floating mb-3 sc-form-group-feedback">
-              <input type="email" id="email" name="email" autocomplete="email"
-                     class="form-control" formControlName="email"
-                     placeholder="email@esempio.com"
-                     [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].invalid, 'is-valid': f['email'].touched && f['email'].valid }">
-              <label for="email">Email</label>
+            @if (errorMessage) {
+              <div class="alert alert-danger mb-4 shadow-sm border-0 text-center rounded-3" role="alert">
+                {{ errorMessage }}
+              </div>
+            }
 
-              <span class="sc-status-icon sc-status-icon-valid bi bi-check-lg">✓</span>
-              <span class="sc-status-icon sc-status-icon-invalid bi bi-x-lg">✗</span>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="needs-validation">
 
-              @if (f['email'].touched && f['email'].invalid) {
-                <div class="invalid-feedback ps-2">
-                  @if (f['email'].errors?.['required']) { <span>Campo obbligatorio</span> }
-                  @if (f['email'].errors?.['email']) { <span>Email non valida</span> }
-                </div>
-              }
+              <div class="form-floating mb-3 sc-form-group-feedback">
+                <input type="text" id="username" name="username" autocomplete="username"
+                       class="form-control custom-input" formControlName="username"
+                       placeholder="Nome Utente"
+                       [ngClass]="{ 'is-invalid': f['username'].touched && f['username'].invalid, 'is-valid': f['username'].touched && f['username'].valid }">
+                <label for="username">Nome Utente</label>
+
+
+                @if (f['username'].touched && f['username'].invalid) {
+                  <div class="invalid-feedback ps-2">
+                    @if (f['username'].errors?.['required']) { <span>Campo obbligatorio</span> }
+                    @if (f['username'].errors?.['minlength']) { <span>Almeno 3 caratteri</span> }
+                  </div>
+                }
+              </div>
+
+              <div class="form-floating mb-3 sc-form-group-feedback">
+                <input type="email" id="email" name="email" autocomplete="email"
+                       class="form-control custom-input" formControlName="email"
+                       placeholder="email@esempio.com"
+                       [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].invalid, 'is-valid': f['email'].touched && f['email'].valid }">
+                <label for="email">Email</label>
+
+
+                @if (f['email'].touched && f['email'].invalid) {
+                  <div class="invalid-feedback ps-2">
+                    @if (f['email'].errors?.['required']) { <span>Campo obbligatorio</span> }
+                    @if (f['email'].errors?.['email']) { <span>Email non valida</span> }
+                  </div>
+                }
+              </div>
+
+              <div class="form-floating mb-4 sc-form-group-feedback">
+                <input type="password" id="password" name="password" autocomplete="new-password"
+                       class="form-control custom-input" formControlName="password"
+                       placeholder="Scegli la tua password"
+                       [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid, 'is-valid': f['password'].touched && f['password'].valid }">
+                <label for="password">Password</label>
+
+
+                @if (f['password'].touched && f['password'].invalid) {
+                  <div class="invalid-feedback ps-2">
+                    @if (f['password'].errors?.['required']) { <span>Campo obbligatorio</span> }
+                    @if (f['password'].errors?.['minlength']) { <span>Almeno 6 caratteri</span> }
+                  </div>
+                }
+              </div>
+
+              <button type="submit" class="btn btn-primary sc-btn-register w-100 mt-2" [disabled]="registerForm.invalid || isLoading">
+                @if (isLoading) {
+                  <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Registrazione in corso...
+                } @else {
+                  Registrati
+                }
+
+              </button>
+
+            </form>
+
+            <div class="text-center mt-4 pt-2">
+              <p class="text-muted small">Hai già un account? <a routerLink="/login" class="sc-login-link">Accedi qui</a></p>
             </div>
-
-            <div class="form-floating mb-4 sc-form-group-feedback">
-              <input type="password" id="password" name="password" autocomplete="new-password"
-                     class="form-control" formControlName="password"
-                     placeholder="Scegli la tua password"
-                     [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid, 'is-valid': f['password'].touched && f['password'].valid }">
-              <label for="password">Password</label>
-
-              <span class="sc-status-icon sc-status-icon-valid bi bi-check-lg">✓</span>
-              <span class="sc-status-icon sc-status-icon-invalid bi bi-x-lg">✗</span>
-
-              @if (f['password'].touched && f['password'].invalid) {
-                <div class="invalid-feedback ps-2">
-                  @if (f['password'].errors?.['required']) { <span>Campo obbligatorio</span> }
-                  @if (f['password'].errors?.['minlength']) { <span>Almeno 6 caratteri</span> }
-                </div>
-              }
-            </div>
-
-            <button type="submit" class="btn btn-primary sc-btn-register w-100 mt-2" [disabled]="registerForm.invalid">
-              Registrati
-            </button>
-
-          </form>
-
-          <div class="text-center mt-4 pt-2">
-            <p class="text-muted small">Hai già un account? <a routerLink="/login" class="sc-login-link">Accedi qui</a></p>
           </div>
         </div>
       </div>

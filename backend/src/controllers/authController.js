@@ -14,7 +14,7 @@ const register = async (req, res) => {
 
     } catch (error) {
         // Se il Service ha lanciato l'errore personalizzato, mando un 400
-        if (error.message === 'Username o email già in uso') {
+        if (error.message === 'Email o username già in uso') {
             return res.status(400).json({ error: error.message });
         }
         
