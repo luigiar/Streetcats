@@ -1,0 +1,42 @@
+<div class="modal-backdrop fade show"></div>
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content custom-card border-0">
+
+      <div class="modal-header sc-bg-primary text-white rounded-top-4" style="border-bottom: none;">
+        <h5 class="modal-title fw-bold"><i class="bi bi-geo-alt-fill"></i> Segnala un nuovo gatto</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="onCancel()"></button>
+      </div>
+
+      <div class="modal-body p-4">
+        <p class="text-muted small mb-4">
+          <i class="bi bi-pin-map-fill sc-text-primary"></i> Coordinate: {{ coords()?.lat | number:'1.4-4' }}, {{ coords()?.lng | number:'1.4-4' }}
+        </p>
+
+        <form [formGroup]="catForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Nome / Segni particolari *</label>
+            <input type="text" class="form-control custom-input" formControlName="title" placeholder="Es. Gatto rosso con collarino blu">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Descrizione</label>
+            <textarea class="form-control custom-input" formControlName="description" rows="3" placeholder="Aggiungi qualche dettaglio..."></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-bold">Foto del Gatto *</label>
+            <input type="file" class="form-control custom-input" (change)="onFileSelected($event)" accept="image/*">
+          </div>
+
+          <div class="d-flex justify-content-end gap-2 mt-4">
+            <button type="button" class="btn btn-light rounded-3 px-4 fw-bold" (click)="onCancel()">Annulla</button>
+            <button type="submit" class="btn custom-btn px-4" [disabled]="catForm.invalid">Salva Gatto</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

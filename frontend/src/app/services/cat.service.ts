@@ -14,4 +14,9 @@ export class CatService {
   getCats(): Observable<Cat[]> {
     return this.http.get<Cat[]>(this.apiUrl);
   }
+
+  //l'interceptor passa il token qui, non lo aggiugo manualmente
+    addCat(catData: any): Observable<Cat> {
+    return this.http.post<Cat>(this.apiUrl, catData);
+  }
 }

@@ -1,15 +1,17 @@
-import { Component, signal, WritableSignal } from '@angular/core'; // import dei signals
+import { Component, signal, WritableSignal, inject, NgZone} from '@angular/core'; // import dei signals
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
-import { latLng, tileLayer, MapOptions, marker, icon, Marker, Map as LeafletMap } from 'leaflet';
+import { latLng, tileLayer, MapOptions, marker, icon, Marker, Map as LeafletMap, LeafletMouseEvent } from 'leaflet';
 import { CatService } from '../../services/cat.service';
 import { Cat } from '../../models/cat.model';
+import { AuthService } from '../../services/auth.service';
+import { CatModalComponent } from '../cat-modal/cat-modal.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LeafletModule],
+  imports: [CommonModule, LeafletModule, CatModalComponent, NavbarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -39,6 +41,9 @@ export class HomeComponent {
   });
 
   private map!: LeafletMap;
+  private authService = inject(AuthService);
+  private ngZone = inject(NgZone);
+
 
 
   constructor(private catService: CatService) {
@@ -49,8 +54,64 @@ export class HomeComponent {
     console.log('🟢 La mappa è pronta! Sto per chiamare il server...');
     this.map = map;
     this.caricaGatti();
+
+    this.map.on('click', (evento: any) => this.gestisciClicMappa(evento));
   }
 
+  mostraModaleAggiunta = false;
+  coordinateCliccate: { lat: number, lng: number } | null = null;
+
+
+  //logic di click mappa
+  private gestisciClicMappa(evento: LeafletMouseEvent) {
+    this.ngZone.run(() => {
+    const lat = evento.latlng.lat;
+    const lng = evento.latlng.lng;
+
+    if(this.authService.currentUser()){
+      console.log(`📍 Cliccato a Lat: ${lat}, Lng: ${lng}. UTENTE LOGGATO! Apriamo il form...`);
+      this.coordinateCliccate = { lat, lng };
+      this.mostraModaleAggiunta = true;
+
+    } else{
+      console.warn('🛑 Utente non loggato ha provato ad aggiungere un gatto.');
+      alert('🐾 Fai il Login o Registrati per poter segnalare un gatto sulla mappa!');
+    }
+  });
+  }
+
+  chiudiModale() {
+    this.mostraModaleAggiunta = false;
+    this.coordinateCliccate= null;
+  }
+
+  salvaNuovoGatto(datiGatto: any) {
+    console.log('🚀 Dati ricevuti dal componente figlio!', datiGatto);
+
+    const formData = new FormData();
+    formData.append('title', datiGatto.title);
+
+    //se la descrizione è vuota, aggiungo una descrizione di default
+    //chiamata al backend per salvare il nuovo gatto
+    formData.append('description', datiGatto.description || '');
+    formData.append('latitude', datiGatto.latitude.toString());
+    formData.append('longitude', datiGatto.longitude.toString());
+    formData.append('image', datiGatto.image);
+
+    this.catService.addCat(formData).subscribe({
+      next:(nuovoGattoSalvato) => {
+      console.log('✅ Nuovo gatto salvato con successo!', nuovoGattoSalvato);
+
+    this.chiudiModale();
+
+    this.caricaGatti();
+      },
+      error:(err)=>{
+        console.error('❌ Errore durante il salvataggio:', err);
+        alert('Ops! Errore durante il salvataggio. Controlla la console.');
+      }
+    });
+  }
   caricaGatti() {
     this.catService.getCats().subscribe({
       next: (cats: Cat[]) => {

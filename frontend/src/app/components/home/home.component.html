@@ -9,6 +9,13 @@
            [leafletLayers]="layers()"
            (leafletMapReady)="onMapReady($any($event))">
       </div>
+@if (mostraModaleAggiunta) {
+  <app-cat-modal
+    [coords]="coordinateCliccate"
+    (closeModal)="chiudiModale()"
+    (saveCat)="salvaNuovoGatto($event)">
+  </app-cat-modal>
+}
     </div>
   </div>
 </div>
