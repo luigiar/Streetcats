@@ -1,0 +1,42 @@
+<div class="modal-backdrop fade show"></div>
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+    <div class="modal-content custom-card border-0 rounded-4">
+
+      <div class="modal-header sc-bg-primary text-white rounded-top-4" style="border-bottom: none;">
+        <h5 class="modal-title fs-4 fw-bold">
+          🐾 {{ cat()?.title }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeModal.emit()"></button>
+      </div>
+
+      <div class="modal-body p-0">
+        <img [src]="getImageUrl()"
+             class="img-fluid w-100"
+             style="max-height: 400px; object-fit: cover;"
+             alt="Foto del gatto">
+
+        <div class="p-4">
+          <p class="text-muted small mb-3 border-bottom pb-2">
+            <i class="bi bi-person-circle sc-text-primary fs-6 me-1"></i> Avvistato da: <strong class="text-dark">{{ cat()?.username || 'Utente Anonimo' }}</strong>
+
+            <span class="float-end">
+              <i class="bi bi-calendar-event sc-text-primary fs-6 me-1"></i> {{ cat()?.created_at | date:'dd/MM/yyyy' }}
+            </span>
+          </p>
+
+          <div class="cat-description fs-5 text-dark" [innerHTML]="parsedDescription()"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer bg-light justify-content-center border-0 rounded-bottom-4">
+        <p class="text-muted mb-0">
+          <i>I commenti arriveranno presto qui sotto... 💬</i>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>

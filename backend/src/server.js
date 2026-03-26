@@ -13,6 +13,7 @@ const app = express();
 // MIDDLEWARE
 app.use(cors()); //permette al frontend angular di fare richieste senza blocchi cors.
 app.use(express.json()); //permette al server di leggere i dati in formato json.
+// Rende pubblica la cartella 'uploads' per poter visualizzare le foto dei gatti
 app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 app.use('/api/cats', catRoutes);

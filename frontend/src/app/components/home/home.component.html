@@ -16,6 +16,12 @@
     (saveCat)="salvaNuovoGatto($event)">
   </app-cat-modal>
 }
+@if (mostraModaleDettaglio) {
+  <app-cat-detail-modal
+    [cat]="gattoSelezionato"
+    (closeModal)="chiudiModaleDettaglio()">
+  </app-cat-detail-modal>
+}
     </div>
   </div>
 </div>

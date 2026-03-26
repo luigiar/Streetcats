@@ -7,11 +7,13 @@ import { CatService } from '../../services/cat.service';
 import { Cat } from '../../models/cat.model';
 import { AuthService } from '../../services/auth.service';
 import { CatModalComponent } from '../cat-modal/cat-modal.component';
+import { CatDetailModalComponent } from '../cat-detail-modal/cat-detail-modal.component';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LeafletModule, CatModalComponent, NavbarComponent],
+  imports: [CommonModule, LeafletModule, CatModalComponent, CatDetailModalComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -60,7 +62,9 @@ export class HomeComponent {
 
   mostraModaleAggiunta = false;
   coordinateCliccate: { lat: number, lng: number } | null = null;
-
+// Variabili per la modale DETTAGLIO
+  mostraModaleDettaglio = false;
+  gattoSelezionato: Cat | null = null;
 
   //logic di click mappa
   private gestisciClicMappa(evento: LeafletMouseEvent) {
@@ -128,8 +132,17 @@ export class HomeComponent {
           }
 
           const m = marker([lat, lng], { icon: this.catIcon });
-          m.bindPopup(`<b>${cat.title}</b><br>Gatto di quartiere 🐾`);
+          m.on('click', () => {
+          this.ngZone.run(() => {
+          console.log(`📌 Marker cliccato: ${cat.title} (ID: ${cat.id})`);
+          this.gattoSelezionato = cat;
+          this.mostraModaleDettaglio = true;
+          });
+          });
+
+
           return m;
+
         });
 
         // aggiornamento dei signal
@@ -140,4 +153,11 @@ export class HomeComponent {
       error: (err) => console.error('❌ Errore caricamento gatti:', err)
     });
   }
+//metodo per chiudere la modale dettaglio
+chiudiModaleDettaglio() {
+this.mostraModaleDettaglio = false;
+this.gattoSelezionato = null;
 }
+}
+
+
