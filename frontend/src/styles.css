@@ -1,1 +1,163 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Font nunito da google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+/* =========================================
+   VARIABILI GLOBALI STREETCATS
+   ========================================= */
+:root {
+  --sc-primary-color: #ff9f43; /* Arancione StreetCats */
+  --sc-primary-hover: #fca048;
+  --sc-primary-shadow: rgba(255, 159, 67, 0.25);
+  --sc-bg-color: #f8f9fa;
+}
+
+body {
+  background-color: var(--sc-bg-color);
+  font-family: 'Nunito', sans-serif; /* font applicato su tutto il sito */
+}
+
+/* =========================================
+   LAYOUT AUTENTICAZIONE (Login & Register)
+   ========================================= */
+
+/* Centra tutto verticalmente e aggiunge uno sfondo leggero */
+.login-wrapper, .auth-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+/* Stile della card: bordi arrotondati e ombra morbida */
+.custom-card, .sc-register-card {
+  border: none;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+  background: white;
+}
+
+.custom-card .card-body, .sc-register-card .card-body {
+  padding: 3rem !important; /* Più respiro interno */
+}
+
+/* Titolo dell'app */
+.app-title {
+  font-weight: 800;
+  color: #2c3e50;
+  letter-spacing: -0.5px;
+}
+
+/* =========================================
+   FORM E INPUT
+   ========================================= */
+
+.form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+/* Input personalizzati */
+.custom-input {
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+/* Effetto focus (colore tema StreetCats) */
+.custom-input:focus {
+  background-color: #ffffff;
+  border-color: var(--sc-primary-color);
+  box-shadow: 0 0 0 0.25rem var(--sc-primary-shadow);
+}
+
+/* Fix per le icone di errore doppie di Bootstrap */
+.form-control.is-invalid,
+.form-control.is-valid {
+  background-image: none !important;
+  padding-right: 0.75rem;
+}
+
+/* =========================================
+   BOTTONI E LINK
+   ========================================= */
+
+/* Bottone principale arancione */
+.custom-btn, .sc-btn-register {
+  background-color: var(--sc-primary-color) !important;
+  border-color: var(--sc-primary-color) !important;
+  color: white !important;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+/* Effetto hover sul bottone */
+.custom-btn:hover:not(:disabled), .sc-btn-register:hover:not(:disabled) {
+  background-color: var(--sc-primary-hover) !important;
+  border-color: #e58e3c !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--sc-primary-shadow);
+}
+
+.custom-btn:disabled, .sc-btn-register:disabled {
+  background-color: #ffdcb8 !important;
+  border-color: #ffdcb8 !important;
+  color: white !important;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Link in basso */
+.link-registrati, .sc-login-link {
+  color: var(--sc-primary-color);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+/* Colore testo personalizzato StreetCats */
+.sc-text-primary {
+  color: var(--sc-primary-color) !important;
+}
+
+.link-registrati:hover, .sc-login-link:hover {
+  color: #e58e3c;
+  text-decoration: underline;
+}
+
+/* =========================================
+   ANIMAZIONI (Zampa ed Errore)
+   ========================================= */
+
+.sc-brand-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  animation: pawSwing 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pawSwing {
+  from { transform: rotate(-10deg); }
+  to { transform: rotate(10deg); }
+}
+
+.alert-danger {
+  animation: shakeFade 0.4s ease-in-out;
+}
+
+@keyframes shakeFade {
+  0% { opacity: 0; transform: translateX(-10px); }
+  25% { opacity: 0.5; transform: translateX(10px); }
+  50% { opacity: 1; transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+  100% { opacity: 1; transform: translateX(0); }
+}

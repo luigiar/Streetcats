@@ -9,7 +9,7 @@ import { Cat } from '../../models/cat.model';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LeafletModule, NavbarComponent],
+  imports: [CommonModule, LeafletModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
