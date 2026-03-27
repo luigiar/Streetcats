@@ -2,8 +2,21 @@
 
 <div class="container-fluid p-0">
   <div class="row g-0">
-    <div class="col">
-      <div class="map-container"
+    <div class="col position-relative">
+
+      <div class="position-absolute top-0 start-50 translate-middle-x mt-3"
+           style="z-index: 1000; width: 90%; max-width: 400px;">
+        <div class="input-group shadow-lg rounded-pill overflow-hidden border border-2 border-white">
+          <input type="text"
+                 class="form-control border-0 px-4 py-2"
+                 placeholder="Cerca un indirizzo, città o quartiere..."
+                 [(ngModel)]="searchQuery"
+                 (keyup.enter)="cercaIndirizzo()">
+          <button class="btn btn-light bg-white border-0 px-4 sc-text-primary" (click)="cercaIndirizzo()">
+            <i class="bi bi-search fw-bold"></i>
+          </button>
+        </div>
+      </div>      <div class="map-container"
            leaflet
            [leafletOptions]="options"
            [leafletLayers]="layers()"

@@ -253,3 +253,14 @@ body {
   display: inline-block;
   animation: pawSwing 0.5s ease-in-out infinite alternate;
 }
+
+/*searchbar indirizzi */
+.input-group:focus-within {
+  box-shadow: 0 0 0 0.25rem var(--sc-primary-shadow) !important;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  box-shadow: none;
+}

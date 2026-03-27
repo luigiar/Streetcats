@@ -9,11 +9,14 @@ import { AuthService } from '../../services/auth.service';
 import { CatModalComponent } from '../cat-modal/cat-modal.component';
 import { CatDetailModalComponent } from '../cat-detail-modal/cat-detail-modal.component';
 import { RouterLink } from '@angular/router';
+import {HttpClient} from "@angular/common/http";
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LeafletModule, CatModalComponent, CatDetailModalComponent, RouterLink],
+  imports: [CommonModule, LeafletModule, CatModalComponent, CatDetailModalComponent, RouterLink, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -71,7 +74,9 @@ export class HomeComponent {
   mostraModaleStato = false;
   messaggioStato = '';
   isErroreStato = false;
-
+//variabili per la ricerca
+searchQuery = '';
+private http = inject(HttpClient);
 
 
   //logic di click mappa
@@ -180,6 +185,41 @@ chiudiModaleDettaglio() {
 this.mostraModaleDettaglio = false;
 this.gattoSelezionato = null;
 }
+
+
+  cercaIndirizzo() {
+    if(!this.searchQuery.trim()) return;
+    console.log(` Cerco l'indirizzo: ${this.searchQuery}`);
+
+    //Api di OpenStreetMap per la geocodifica (Nominatim)
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.searchQuery)}`;
+    this.http.get<any[]>(url).subscribe({
+    next: (risultati) => {
+    if(risultati && risultati.length > 0) {
+    //primo risultato più rilevante
+    const lat = parseFloat(risultati[0].lat);
+    const lng = parseFloat(risultati[0].lon);
+
+    console.log(`📍 Trovato! Volo a Lat: ${lat}, Lng: ${lng}`);
+
+    //zoom di leaftlet sulla posizione trovata
+    this.map.flyTo([lat, lng], 18, {
+    animate: true,
+    duration: 1.5 //durata dell'animazione in secondi
+  });
+
+  //svuoto la barra di ricerca
+  this.searchQuery = '';
+    } else{
+      alert('Indirizzo non trovato! Prova a essere più specifico (es. "Via Roma, Milano").');
+    }
+},
+error: (err) => {
+        console.error('❌ Errore durante la ricerca:', err);
+        alert('Errore di connessione al server delle mappe.');
+        }
+});
+  }
 }
 
 
