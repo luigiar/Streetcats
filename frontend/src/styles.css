@@ -168,4 +168,40 @@ body {
   100% { opacity: 1; transform: translateX(0); }
 }
 
+/* --- STILI NAVBAR --- */
 
+/* Forza i bottoni della navbar ad avere angoli arrotondati e padding giusto */
+.nav-btn {
+  border-radius: 0.6rem !important;
+  padding: 0.4rem 1rem !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  transition: all 0.3s ease !important;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Bottone Registrati (Outline Arancione) */
+.btn-outline-warning {
+  color: var(--sc-primary-color) !important;
+  border-color: var(--sc-primary-color) !important;
+}
+
+.btn-outline-warning:hover {
+  background-color: var(--sc-primary-color) !important;
+  color: white !important;
+  border-color: var(--sc-primary-color) !important;
+  transform: translateY(-1px);
+}
+
+/* Bottone Esci (Miglioramento dell'outline rosso) */
+.btn-outline-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+}
+
+/* Rende il Ciao [Nome] un po' più piccolo per non affollare la barra */
+.sc-text-primary {
+  font-size: 0.95rem;
+}
