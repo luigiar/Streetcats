@@ -8,12 +8,12 @@ import { Cat } from '../../models/cat.model';
 import { AuthService } from '../../services/auth.service';
 import { CatModalComponent } from '../cat-modal/cat-modal.component';
 import { CatDetailModalComponent } from '../cat-detail-modal/cat-detail-modal.component';
-
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LeafletModule, CatModalComponent, CatDetailModalComponent],
+  imports: [CommonModule, LeafletModule, CatModalComponent, CatDetailModalComponent, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -60,11 +60,19 @@ export class HomeComponent {
     this.map.on('click', (evento: any) => this.gestisciClicMappa(evento));
   }
 
+
+  //variabili per la modale
   mostraModaleAggiunta = false;
   coordinateCliccate: { lat: number, lng: number } | null = null;
 // Variabili per la modale DETTAGLIO
   mostraModaleDettaglio = false;
   gattoSelezionato: Cat | null = null;
+  mostraModaleLoginAlert =false;
+  mostraModaleStato = false;
+  messaggioStato = '';
+  isErroreStato = false;
+
+
 
   //logic di click mappa
   private gestisciClicMappa(evento: LeafletMouseEvent) {
@@ -79,10 +87,13 @@ export class HomeComponent {
 
     } else{
       console.warn('🛑 Utente non loggato ha provato ad aggiungere un gatto.');
-      alert('🐾 Fai il Login o Registrati per poter segnalare un gatto sulla mappa!');
+        this.mostraModaleLoginAlert = true;
     }
   });
   }
+chiudiAlert() {
+  this.mostraModaleLoginAlert = false;
+}
 
   chiudiModale() {
     this.mostraModaleAggiunta = false;
@@ -109,13 +120,24 @@ export class HomeComponent {
     this.chiudiModale();
 
     this.caricaGatti();
+
+    // Mostriamo il successo
+    this.messaggioStato = 'Gatto salvato con successo! Grazie per la segnalazione. 🐾';
+    this.isErroreStato = false;
+    this.mostraModaleStato = true;
       },
       error:(err)=>{
         console.error('❌ Errore durante il salvataggio:', err);
-        alert('Ops! Errore durante il salvataggio. Controlla la console.');
+        this.messaggioStato = 'Ops! Qualcosa è andato storto durante il salvataggio. Riprova più tardi.';
+        this.isErroreStato = true;
+        this.mostraModaleStato = true;
       }
     });
   }
+
+  chiudiModaleStato() {
+  this.mostraModaleStato = false;
+}
   caricaGatti() {
     this.catService.getCats().subscribe({
       next: (cats: Cat[]) => {
