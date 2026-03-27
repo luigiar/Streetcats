@@ -2,11 +2,13 @@ import { Component, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Cat } from '../../models/cat.model';
 import { marked } from 'marked'; // traduttore per il markdown
+import { CommentSectionComponent } from '../comment-section/comment-section.component';
+
 
 @Component({
   selector: 'app-cat-detail-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CommentSectionComponent],
   templateUrl: './cat-detail-modal.component.html',
   styleUrl: './cat-detail-modal.component.css'
 })

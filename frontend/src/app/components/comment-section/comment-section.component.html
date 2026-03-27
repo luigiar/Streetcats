@@ -1,0 +1,61 @@
+<div class="comment-section-container w-100 mt-2">
+  <h6 class="border-bottom pb-2 mb-3 fw-bold text-dark">
+    <i class="bi bi-chat-text sc-text-primary me-1"></i> Commenti ({{ comments().length }})
+  </h6>
+
+  <div class="comments-list mb-3 pe-2" style="max-height: 250px; overflow-y: auto; overflow-x: hidden;">
+
+    @for (comment of comments(); track comment.id) {
+      <div class="card bg-white mb-2 border-0 shadow-sm rounded-3">
+        <div class="card-body p-2 px-3">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <strong class="sc-text-primary small">
+              <i class="bi bi-person-fill"></i> {{ comment.username || 'Anonimo' }}
+            </strong>
+            <small class="text-muted" style="font-size: 0.75rem;">
+              {{ comment.created_at | date:'dd/MM/yyyy HH:mm' }}
+            </small>
+          </div>
+          <p class="mb-0 small text-dark">{{ comment.content }}</p>
+        </div>
+      </div>
+    }
+    @empty {
+      <div class="text-center text-muted small py-4 fst-italic">
+        <i class="bi bi-chat-dots fs-4 d-block mb-2 sc-text-primary opacity-50"></i>
+        Nessun commento ancora. Facci sapere la tua opinione! 🐾
+      </div>
+    }
+
+  </div>
+
+  @if (authService.currentUser()) {
+    <form [formGroup]="commentForm" (ngSubmit)="inviaCommento()">
+      <div class="input-group input-group-sm shadow-sm rounded-3">
+        <input type="text"
+               class="form-control custom-input"
+               placeholder="Scrivi un commento..."
+               formControlName="content">
+
+        <button class="btn custom-btn px-3"
+                type="submit"
+                [disabled]="commentForm.invalid">
+          <i class="bi bi-send-fill"></i>
+        </button>
+      </div>
+      @if (commentForm.get('content')?.touched && commentForm.get('content')?.invalid) {
+        <div class="text-danger mt-1 ms-1" style="font-size: 0.75rem;">
+          Il commento deve essere di almeno 2 caratteri.
+        </div>
+      }
+    </form>
+  }
+
+  @else {
+    <div class="alert bg-white border-0 shadow-sm py-3 text-center mb-0 rounded-3" style="font-size: 0.85rem;">
+      <i class="bi bi-lock-fill sc-text-primary mb-1 fs-5 d-block"></i>
+      Vuoi partecipare alla conversazione?<br>
+      <a routerLink="/login" class="sc-login-link">Accedi</a> oppure <a routerLink="/register" class="sc-login-link">Registrati</a>
+    </div>
+  }
+</div>

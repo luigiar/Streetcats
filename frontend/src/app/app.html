@@ -1,3 +1,22 @@
+@if (notificationService.message()) {
+  <div class="toast-container position-fixed top-0 end-0 p-4" style="z-index: 1055; margin-top: 60px;">
+    <div class="toast show align-items-center text-white border-0 shadow-lg rounded-3"
+         [ngClass]="notificationService.type() === 'success' ? 'bg-success' : 'bg-danger'"
+         role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex px-2 py-1">
+        <div class="toast-body fw-bold" style="font-size: 1.05rem;">
+          <i class="bi me-2 fs-5"
+             [ngClass]="notificationService.type() === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'">
+          </i>
+          {{ notificationService.message() }}
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
 <app-navbar></app-navbar>
 
 <router-outlet></router-outlet>
+
+

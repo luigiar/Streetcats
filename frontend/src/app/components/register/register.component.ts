@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule} from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
 selector: 'app-register',
 standalone: true,
-imports: [CommonModule, ReactiveFormsModule, RouterModule],
+imports: [CommonModule, ReactiveFormsModule, RouterModule ],
 templateUrl: './register.component.html',
 styleUrl: './register.component.css'
 })
@@ -22,7 +23,8 @@ export class RegisterComponent implements OnInit { // Implementata l'interfaccia
 constructor(
   private fb: FormBuilder,
   private authService: AuthService,
-  private router: Router
+  private router: Router,
+  private notificationService: NotificationService
 ) {
 // costruzione della struttura del modulo
     this.registerForm = this.fb.group({
@@ -64,6 +66,8 @@ onSubmit(){
       //token già salvato nel service.
       //l'utente torna alla home
       this.router.navigate(['/']);
+      this.notificationService.show('Benvenuto su Streetcats! Registrazione completata.', 'success');
+
     },
     error: (err) => {
       console.error('Errore durante la registrazione', err);

@@ -123,6 +123,7 @@ body {
 
 /* Link in basso */
 .link-registrati, .sc-login-link {
+  cursor: pointer;
   color: var(--sc-primary-color);
   font-weight: 700;
   text-decoration: none;

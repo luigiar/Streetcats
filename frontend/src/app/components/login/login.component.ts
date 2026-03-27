@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit{
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
-
+  private notificationService = inject(NotificationService);
   constructor() {
     this.loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -57,6 +57,7 @@ ngOnInit() {
     console.log('✅Login effettuato!', res);
     this.isLoading = false;
    this.router.navigate(['/']);
+   this.notificationService.show('Login effettuato con successo!', 'success');
     },
     error:(err) => {
    console.error('❌ Errore di login', err);

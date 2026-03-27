@@ -1,13 +1,13 @@
 const express = require('express');
-const router = express.Router();
+//  { mergeParams: true } per poter leggere :catId dall'URL principale
+const router = express.Router({ mergeParams: true }); 
 const {createComment, fetchComments} = require('../controllers/commentController.js');
-
 const {protect} = require ('../middlewares/authMiddleware.js');
 
-// GET /api/comments/:catId Pubblica chiunque può leggere i commenti 
-router.get('/:catId', fetchComments);
+// GET /api/cats/:catId/comments - Pubblica
+router.get('/', fetchComments); 
 
-// POST /api/comments  Protetta solo chi ha il token può commentare
+// POST /api/cats/:catId/comments - Protetta
 router.post('/', protect, createComment);
 
 module.exports = router;

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,8 +13,10 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarComponent {
   authService = inject(AuthService);
-
+  private notificationService = inject(NotificationService);
   logout() {
     this.authService.logout();
-  }
+
+    this.notificationService.show('Sei stato disconnesso/a. Torna presto a trovarci! 🐾', 'success');
+     }
 }

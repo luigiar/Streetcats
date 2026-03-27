@@ -11,7 +11,7 @@ const addComment = async (content, userId, catId) => {
 };
 
 const getComments = async (catId) => {
-  return await comentRepo.findCommentsByCatId(catId);
+  return await commentRepo.findCommentsByCatId(catId);
 };
 
 module.exports = {addComment, getComments};

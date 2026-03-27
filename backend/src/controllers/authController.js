@@ -3,13 +3,19 @@ const authService = require('../services/authService');
 const register = async (req, res) => {
     try {
         const { username, email, password } = req.body;
-        //delego il lavoro al Service, che si occuperà di validare i dati e interagire con il database
-        const user = await authService.registerUser(username, email, password);
+        
+        // Delego il lavoro al Service: creo l'utente nel database
+        await authService.registerUser(username, email, password);
 
-        // Se va tutto bene, rispondo al frontend
+        // Faccio un "auto-login" silenzioso usando i dati appena inseriti
+        // Questo genererà il token
+        const autoLoginResult = await authService.loginUser(email, password);
+
+        //  Rispondo al frontend con  quello che gli serve 
         res.status(201).json({
-            message: 'Utente registrato con successo!',
-            user: user
+            message: 'Utente registrato e loggato con successo!',
+            token: autoLoginResult.token,
+            user: autoLoginResult.user
         });
 
     } catch (error) {
@@ -22,9 +28,7 @@ const register = async (req, res) => {
         console.error('Errore durante la registrazione:', error);
         res.status(500).json({ error: 'Errore interno del server' });
     }
-};
-
-//funzione di login
+};//funzione di login
 const login = async(req,res) =>{
   try {
     const { email, password } = req.body;

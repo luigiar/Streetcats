@@ -17,7 +17,7 @@ app.use(express.json()); //permette al server di leggere i dati in formato json.
 app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 app.use('/api/cats', catRoutes);
-app.use('/api/comments', commentRoutes);
+app.use('/api/cats/:catId/comments', commentRoutes);
 
 //rotta di toDateString();
 app.get('/', async (req,res) => {

@@ -3,7 +3,8 @@ const commentService = require ('../services/commentService.js');
 const createComment = async (req, res) => {
  try {
         const userId = req.user.userId; // Garantito dal middleware 'protect'
-        const { content, catId } = req.body;
+        const { content } = req.body; // contenuto dal body
+        const { catId } = req.params; //  catId dall'URL
 
         const newComment = await commentService.addComment(content, userId, catId);
 
