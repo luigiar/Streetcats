@@ -67,6 +67,7 @@ export class HomeComponent {
 
   //variabili per la modale
   mostraModaleAggiunta = false;
+  isCaricamentoMappa = false;
   coordinateCliccate: { lat: number, lng: number } | null = null;
 // Variabili per la modale DETTAGLIO
   mostraModaleDettaglio = false;
@@ -87,9 +88,43 @@ private http = inject(HttpClient);
     const lng = evento.latlng.lng;
 
     if(this.authService.currentUser()){
-      console.log(`📍 Cliccato a Lat: ${lat}, Lng: ${lng}. UTENTE LOGGATO! Apriamo il form...`);
-      this.coordinateCliccate = { lat, lng };
-      this.mostraModaleAggiunta = true;
+      console.log(`📍 Cliccato a Lat: ${lat}, Lng: ${lng}. UTENTE LOGGATO! Controllo se è in mare...`);
+      //caricamento mappa in corso
+      this.isCaricamentoMappa = true;
+
+      //Chiedo a Nominatim se le coordinate sono in mare
+      const urlReverse = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+
+      this.http.get<any>(urlReverse).subscribe({
+          next: (risultato) => {
+            //se Nominatim non riesce a geocodificare, assumo che sia in mare
+
+            this.isCaricamentoMappa = false;
+
+
+            if(risultato.error){
+              console.warn('⚠️ Nominatim non ha potuto geocodificare le coordinate. Assumo che siano in mare.');
+              //uso la modale errore per informare l'utente
+              this.messaggioStato = 'Miao! Non siamo alla ricerca di squali. Clicca sulla terraferma!';
+              this.isErroreStato = true;
+              this.mostraModaleStato = true;
+            } else {
+              //apro la modale di aggiunta gatto
+              console.log(` Terra confermata (Indirizzo: ${risultato.display_name}). Apro il form...`);
+              this.coordinateCliccate = { lat, lng };
+              this.mostraModaleAggiunta = true;
+          }
+
+        },
+          error:(err) =>{
+
+            this.isCaricamentoMappa = false;
+            //se c'è un errore di connessione
+            console.error('❌ Errore reverse geocoding, proseguo comunque:', err);
+            this.coordinateCliccate = { lat, lng };
+            this.mostraModaleAggiunta = true;
+          }
+        });
 
     } else{
       console.warn('🛑 Utente non loggato ha provato ad aggiungere un gatto.');

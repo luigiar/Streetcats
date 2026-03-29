@@ -91,9 +91,16 @@
             </button>
           </div>
         </div>
-
       </div>
     </div>
+  </div>
+}
+  @if (isCaricamentoMappa) {
+  <div class="overlay" style="flex-direction: column; cursor: wait;">
+    <div class="spinner-border text-warning" style="width: 4rem; height: 4rem; border-width: 0.4rem;" role="status">
+      <span class="visually-hidden">Caricamento...</span>
+    </div>
+    <h4 class="text-white mt-4 fw-bold text-shadow">Sto controllando la zona... </h4>
   </div>
 }
     </div>
