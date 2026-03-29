@@ -1,0 +1,17 @@
+<div class="guida-container">
+  <div class="guida-header" (click)="toggleGuida()">
+    <span>Guida rapida 🐾</span>
+    <span>{{ isAperto ? '▲' : '▼' }}</span>
+  </div>
+
+  @if (isAperto) {
+    <div class="guida-body">
+      <ol>
+        <li>Registra un account.</li>
+        <li>Cerca un indirizzo o clicca sulla mappa.</li>
+        <li>Aggiungi dettagli del gatto.</li>
+        <li>Salva l'avvistamento!</li>
+      </ol>
+    </div>
+  }
+</div>

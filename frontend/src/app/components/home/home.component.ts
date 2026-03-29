@@ -11,12 +11,13 @@ import { CatDetailModalComponent } from '../cat-detail-modal/cat-detail-modal.co
 import { RouterLink } from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
-
+import { WelcomeModalComponent } from '../welcome-modal/welcome-modal.component';
+import {QuickGuideComponent} from '../quick-guide/quick-guide.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LeafletModule, CatModalComponent, CatDetailModalComponent, RouterLink, FormsModule],
+  imports: [CommonModule, LeafletModule, CatModalComponent, CatDetailModalComponent, RouterLink, FormsModule, WelcomeModalComponent, QuickGuideComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

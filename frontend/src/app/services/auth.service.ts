@@ -2,14 +2,14 @@ import { Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse, User } from '../models/auth.model';
-
+import { environment } from '../../environments/environment';
 
 @Injectable({
 providedIn: 'root'
 })
 
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/auth';
+private apiUrl = `${environment.apiUrl}/auth`;
   private tokenKey = 'streetcats_jwt';
 
   //signal : mantiene lo stato dell'utente. Se null, non è loggato

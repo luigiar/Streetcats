@@ -264,3 +264,131 @@ body {
   outline: none;
   box-shadow: none;
 }
+
+@media (max-width: 991px) {
+  .navbar-nav {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    gap: 10px; /* Spazio tra i bottoni in verticale */
+  }
+
+  .nav-btn {
+    width: 100%; /* I bottoni occupano tutta la larghezza su mobile */
+    justify-content: center;
+  }
+
+  .ms-lg-2, .ms-lg-3 {
+    margin-left: 0 !important; /* Togliamo i margini laterali del desktop */
+  }
+}
+
+
+/* ==========================================
+   COMPONENTI Benvenuto e Guida
+   ========================================== */
+
+
+/* --- Modale di Benvenuto --- */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /*posizionata sopra tutto*/
+  backdrop-filter: blur(3px);
+}
+
+.modale-box {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+  animation: popIn 0.3s ease-out;
+}
+
+.modale-box h2 {
+  margin-top: 0;
+  color: #333;
+  font-weight: bold;
+}
+
+.modale-box p {
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.modale-box button {
+  background-color: #fca311; /* Colore arancione  */
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.modale-box button:hover {
+  background-color: #e5930e;
+  transform: scale(1.05);
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* --- Guida Rapida --- */
+.guida-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 280px;
+  background-color: #212529;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  z-index: 1000; /* Sopra la mappa ma sotto le modali */
+  overflow: hidden;
+}
+
+.guida-header {
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgba(255,255,255,0.05);
+  transition: background-color 0.2s;
+}
+
+.guida-header:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+.guida-body {
+  padding: 15px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.guida-body ol {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
+.guida-body li {
+  margin-bottom: 8px;
+  color: #ddd;
+}

@@ -2,14 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Comment } from '../models/comment.model';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:3000/api/cats';
+private apiUrl = `${environment.apiUrl}/cats`;
 
   getCommentsByCatId(catId: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${this.apiUrl}/${catId}/comments`);
