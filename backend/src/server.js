@@ -2,7 +2,7 @@ require('dotenv').config();
 const express =require('express');
 const cors = require('cors'); 
 const {pool} = require('./config/db'); //import della connessione al database
-
+const sanitizeMiddleware = require('./middlewares/sanitize');
 
 const authRoutes = require('./routes/authRoutes.js'); //import delle rotte di autenticazione
 const catRoutes = require('./routes/catRoutes.js'); //import delle rotte per i gatti
@@ -17,11 +17,13 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'] }));
 
 app.use(express.json()); //permette al server di leggere i dati in formato json.
+app.use(sanitizeMiddleware);
 // Rende pubblica la cartella 'uploads' per poter visualizzare le foto dei gatti
 app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 app.use('/api/cats', catRoutes);
 app.use('/api/cats/:catId/comments', commentRoutes);
+
 
 //rotta di toDateString();
 app.get('/', async (req,res) => {

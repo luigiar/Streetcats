@@ -1,27 +1,32 @@
 const commentService = require ('../services/commentService.js');
+const sanitizeHtml = require('sanitize-html');
+const pool = require('../config/db');
 
 const createComment = async (req, res) => {
- try {
-        const userId = req.user.userId; // Garantito dal middleware 'protect'
-        const { content } = req.body; // contenuto dal body
-        const { catId } = req.params; //  catId dall'URL
+    try {
+        const userId = req.user.userId; 
+        const { content } = req.body; 
+        const { catId } = req.params; 
 
-        const newComment = await commentService.addComment(content, userId, catId);
+        if (!content || content.trim() === '') {
+            return res.status(400).json({ error: 'Il commento non può essere vuoto.' });
+        }
+
+    const newComment = await commentService.addComment(content, userId, catId);
 
         res.status(201).json({
             message: 'Commento aggiunto con successo!',
             comment: newComment
         });
+        
     } catch (error) {
-        if (error.message === 'Il testo del commento e l\'ID del gatto sono obbligatori.') {
+        if (error.message === "Il testo del commento e l'ID del gatto sono obbligatori.") {
             return res.status(400).json({ error: error.message });
         }
         console.error('Errore creazione commento:', error);
         res.status(500).json({ error: 'Errore interno del server' });
     }
 };
-
-
 const fetchComments = async (req, res) => {
   try {
         // Estraiamo l'ID del gatto direttamente dall'URL
