@@ -20,9 +20,12 @@ try {
     //vado avanti con la richiesta
     next();
 } catch (error) {
-    return res.status(401).json({ error: 'Token non valido o scaduto' });
-  }
-
-};
+    // Se l'errore è specificamente la scadenza
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ error: 'Token scaduto. Fai di nuovo il login.' });
+    }
+    // Per tutti gli altri errori (token falso, modificato, ecc.)
+    return res.status(401).json({ error: 'Token non valido.' });
+}};
 
 module.exports = { protect };

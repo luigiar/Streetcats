@@ -11,7 +11,11 @@ const commentRoutes = require('./routes/commentRoutes.js'); //import delle rotte
 const app = express();
 
 // MIDDLEWARE
-app.use(cors()); //permette al frontend angular di fare richieste senza blocchi cors.
+app.use(cors({
+  origin: 'http://localhost:4200', //url del frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization'] }));
+
 app.use(express.json()); //permette al server di leggere i dati in formato json.
 // Rende pubblica la cartella 'uploads' per poter visualizzare le foto dei gatti
 app.use('/uploads', express.static('uploads'));

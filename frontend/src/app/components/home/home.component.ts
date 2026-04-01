@@ -88,7 +88,7 @@ private http = inject(HttpClient);
     const lng = evento.latlng.lng;
 
     if(this.authService.currentUser()){
-      console.log(`📍 Cliccato a Lat: ${lat}, Lng: ${lng}. UTENTE LOGGATO! Controllo se è in mare...`);
+      console.log(`📍 Cliccato a Lat: ${lat}, Lng: ${lng}. utente loggato. Controllo se è in mare...`);
       //caricamento mappa in corso
       this.isCaricamentoMappa = true;
 
@@ -103,14 +103,14 @@ private http = inject(HttpClient);
 
 
             if(risultato.error){
-              console.warn('⚠️ Nominatim non ha potuto geocodificare le coordinate. Assumo che siano in mare.');
+              console.warn('⚠️ Nominatim non ha potuto geocodificare le coordinate. Ipotizzo che il click sia in mare.');
               //uso la modale errore per informare l'utente
               this.messaggioStato = 'Miao! Non siamo alla ricerca di squali. Clicca sulla terraferma!';
               this.isErroreStato = true;
               this.mostraModaleStato = true;
             } else {
               //apro la modale di aggiunta gatto
-              console.log(` Terra confermata (Indirizzo: ${risultato.display_name}). Apro il form...`);
+              console.log(` Click valido (Indirizzo: ${risultato.display_name}). Apro il form...`);
               this.coordinateCliccate = { lat, lng };
               this.mostraModaleAggiunta = true;
           }

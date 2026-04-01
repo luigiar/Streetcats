@@ -18,17 +18,19 @@ const register = async (req, res) => {
             user: autoLoginResult.user
         });
 
-    } catch (error) {
-        // Se il Service ha lanciato l'errore personalizzato, mando un 400
-        if (error.message === 'Email o username già in uso') {
-            return res.status(400).json({ error: error.message });
+   } catch (error) {
+        // Intercetto sia l'errore testuale del Service, sia l'errore nativo di PostgreSQL (23505 = unique_violation)
+        if (error.message === 'Email o username già in uso' || error.code === '23505') {
+            return res.status(400).json({ error: 'Email o username già in uso' });
         }
         
         // Altrimenti è un vero errore di sistema
         console.error('Errore durante la registrazione:', error);
         res.status(500).json({ error: 'Errore interno del server' });
     }
-};//funzione di login
+};
+
+//funzione di login
 const login = async(req,res) =>{
   try {
     const { email, password } = req.body;
