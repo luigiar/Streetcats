@@ -27,6 +27,9 @@
                 @if (f['username'].errors?.['required'] && f['username'].touched) {
                   <div class="invalid-feedback">Il nome utente è obbligatorio.</div>
                 }
+                @if (f['username'].errors?.['minlength'] && f['username'].touched) {
+                  <div class="invalid-feedback">Il nome utente deve avere almeno 3 caratteri.</div>
+                }
               </div>
 
               <div class="mb-4">
@@ -39,20 +42,44 @@
                 @if (f['email'].errors?.['required'] && f['email'].touched) {
                   <div class="invalid-feedback">L'email è obbligatoria.</div>
                 }
-              </div>
-
-              <div class="mb-4">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" name="password" autocomplete="new-password" class="form-control custom-input" formControlName="password"
-                       autocomplete="new-password"
-                       placeholder="••••••••"
-                       [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid }">
-
-                @if (f['password'].errors?.['required'] && f['password'].touched) {
-                  <div class="invalid-feedback">La password è obbligatoria.</div>
+                @if (f['email'].errors?.['pattern'] && f['email'].touched) {
+                  <div class="invalid-feedback">Inserisci un formato email valido.</div>
                 }
               </div>
 
+           <div class="mb-4">
+  <label for="password" class="form-label">Password</label>
+
+  <div class="input-group has-validation">
+
+    <input [type]="showPassword ? 'text' : 'password'"
+           id="password" name="password" autocomplete="new-password"
+           class="form-control custom-input" formControlName="password"
+           placeholder="••••••••"
+           [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid }">
+
+    <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+      @if (showPassword) {
+        <i class="bi bi-eye-slash"></i> } @else {
+        <i class="bi bi-eye"></i> }
+    </button>
+
+    @if (f['password'].errors?.['required'] && f['password'].touched) {
+      <div class="invalid-feedback">La password è obbligatoria.</div>
+    }
+    @if (f['password'].errors?.['minlength'] && f['password'].touched) {
+      <div class="invalid-feedback">La password deve avere almeno 8 caratteri.</div>
+    }
+    @if (f['password'].errors?.['pattern'] && f['password'].touched) {
+      <div class="invalid-feedback">La password deve contenere almeno una maiuscola e un numero.</div>
+    }
+
+  </div>
+
+  <div class="form-text" [ngClass]="{'text-danger': f['password'].errors?.['pattern'] && f['password'].touched}">
+    Usa almeno 8 caratteri, una maiuscola e un numero.
+  </div>
+</div>
               <button type="submit" class="btn btn-primary custom-btn w-100 mt-2" [disabled]="registerForm.invalid || isLoading">
                 @if (isLoading) {
                   <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>

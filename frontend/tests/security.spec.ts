@@ -18,7 +18,7 @@ test.describe('StreetCats API & Test di Sicurezza', () => {
     const user = {
       username: uniqueName,
       email: `${uniqueName}@test.com`,
-      password: 'password123'
+      password: 'Password123'
     };
 
     await request.post(`${API_URL}/auth/register`, { data: user });

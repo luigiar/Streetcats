@@ -28,6 +28,11 @@ export class LoginComponent implements OnInit{
     password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
 ngOnInit() {
     // Ascolta ogni digitazione nel form per rimuovere il messaggio d'errore globale

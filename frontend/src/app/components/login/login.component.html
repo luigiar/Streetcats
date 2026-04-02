@@ -33,15 +33,27 @@
 
               <div class="mb-4">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" class="form-control custom-input" formControlName="password" name="password" autoComplete="current-password"
-                       placeholder="••••••••"
-                       [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid }">
 
-                @if (f['password'].errors?.['required'] && f['password'].touched) {
-                  <div class="invalid-feedback">La password è obbligatoria.</div>
-                }
+                <div class="input-group has-validation">
+                  <input [type]="showPassword ? 'text' : 'password'"
+                         id="password" class="form-control custom-input"
+                         formControlName="password" name="password" autoComplete="current-password"
+                         placeholder="••••••••"
+                         [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid }">
+
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                    @if (showPassword) {
+                      <i class="bi bi-eye-slash"></i>
+                    } @else {
+                      <i class="bi bi-eye"></i>
+                    }
+                  </button>
+
+                  @if (f['password'].errors?.['required'] && f['password'].touched) {
+                    <div class="invalid-feedback">La password è obbligatoria.</div>
+                  }
+                </div>
               </div>
-
               <button type="submit" class="btn btn-primary w-100 mt-2 custom-btn" [disabled]="loginForm.invalid || isLoading">
                 @if (isLoading) {
                   <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>

@@ -4,6 +4,15 @@ const register = async (req, res) => {
     try {
         const { username, email, password } = req.body;
         
+        //controllo sulla Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+        if(!emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Formato Email non valido. Inserisci una Email valida.' });
+    }
+
+
+
         // Delego il lavoro al Service: creo l'utente nel database
         await authService.registerUser(username, email, password);
 

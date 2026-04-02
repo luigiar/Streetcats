@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-const USER_TEST = 'lui.a@gmail.com';
-const PASS_TEST = 'password123';
+const USER_TEST = 'tester@streetcats.com';
+const PASS_TEST = 'Streetcats2026';
 
 test.describe('StreetCats E2E Tests', () => {
 

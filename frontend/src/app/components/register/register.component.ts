@@ -26,14 +26,40 @@ constructor(
   private router: Router,
   private notificationService: NotificationService
 ) {
-// costruzione della struttura del modulo
-    this.registerForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+this.registerForm = this.fb.group({
+      // Minimo 3, Massimo 20 caratteri, solo lettere, numeri e underscore
+      username: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-zA-Z0-9_]+$/)
+      ]],
+
+      email: ['', [
+        Validators.required,
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/)
+      ]],
+
+      // Minimo 8 caratteri, almeno una maiuscola e un numero
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W]{8,}$/)
+      ]]
     });
-}
-ngOnInit() {
+  }
+
+// Variabile per tracciare lo stato della password
+  showPassword = false;
+
+  // Funzione che inverte lo stato (da true a false e viceversa)
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+
+
+    ngOnInit() {
     // Questa funzione "ascolta" ogni singola digitazione in qualsiasi campo del form
     this.registerForm.valueChanges.subscribe(() => {
       if (this.errorMessage) {
