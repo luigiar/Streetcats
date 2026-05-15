@@ -12,14 +12,15 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Creazione Tabella Gatti 
+--Creazione Tabella Gatti
 CREATE TABLE cats (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
+    title VARCHAR(100) NOT NULL,
     description TEXT,
-    lat DOUBLE PRECISION NOT NULL,
-    lng DOUBLE PRECISION NOT NULL,
+    latitude DOUBLE PRECISION NOT NULL,
+    longitude DOUBLE PRECISION NOT NULL,
     image_url TEXT,
+    status VARCHAR(50) DEFAULT 'Segnalato',
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -41,13 +42,13 @@ VALUES (
     '$2b$10$QBU3QNB0ekD.m2nDgdlwjeV6OzZd06TwucxUyJYlhLb29Ct9mS3U.'
 );
 
--- inserimento di un gatto
-INSERT INTO cats (name, description, lat, lng, image_url, user_id) 
+--inserimento di un gatto test
+INSERT INTO cats (title, description, latitude, longitude, image_url, user_id) 
 VALUES (
-    'Gatto Rosso', 
-    'Avvistato vicino al parco. È **molto affamato**.', 
-    41.9028, 
-    12.4964, 
+    'Gatto Nero', 
+    'Avvistato vicino ai dipartimenti. È **molto affamato**, dategli dei croccantini!', 
+    40.8382,
+    14.1834,
     'uploads/gatto-test.jpg',
     1
 );
