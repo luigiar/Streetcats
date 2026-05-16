@@ -25,7 +25,7 @@ test.describe('StreetCats API & Test di Sicurezza', () => {
 
     const loginRes = await request.post(`${API_URL}/auth/login`, {
       data: {
-        username: user.username,
+        email: user.email,
         password: user.password
       }
     });
@@ -77,7 +77,7 @@ test.describe('StreetCats API & Test di Sicurezza', () => {
 
     for (const payload of payloads) {
       const response = await post(request, `${API_URL}/auth/login`, {
-        username: payload,
+        email: payload,
         password: 'random_password'
       });
 
@@ -106,8 +106,7 @@ test.describe('StreetCats API & Test di Sicurezza', () => {
 
   // --------------------------------------------------
 test('dovrebbe rifiutare i token JWT scaduti', async ({ request }) => {
-    const secret = process.env.JWT_SECRET || 'defaultSecret';
-
+    const secret = 'unasegretissima_chiave_per_i_tuoi_token_streetcats';
 
     const expiredToken = jwt.sign(
       { id: 999, username: 'test_expired' }, // Payload fittizio
@@ -192,7 +191,7 @@ test('dovrebbe applicare una rigorosa politica di CORS', async ({ request }) => 
   let status;
    for (let i = 0; i < 11; i++) {
     const response = await post(request, `${API_URL}/auth/login`, {
-      username: 'attacker',
+      email: 'hacker@malicious.com',
       password: 'wrong_password'
     });
     status = response.status();

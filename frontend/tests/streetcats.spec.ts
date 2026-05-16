@@ -60,20 +60,19 @@ test('Test 5: Il form di login disabilitato se vuoto', async ({ page }) => {
 
     await expect(btnSubmit).toBeDisabled();
   });
-
+//TEST 6
 test('Test 6: L\'utente effettua il login', async ({ page }) => {
+await page.goto('http://localhost:4200/login');
 
-    await page.goto('http://localhost:4200/login');
+await page.locator('input[formControlName="email"]').fill(USER_TEST);
+await page.locator('input[formControlName="password"]').fill(PASS_TEST);
 
+await page.locator('button[type="submit"]').click();
+await expect(page).toHaveURL('http://localhost:4200/');
 
-    await page.locator('input[type="email"]').fill(USER_TEST);
-    await page.locator('input[type="password"]').fill(PASS_TEST);
-
-    await page.locator('button[type="submit"]').click();
-    await expect(page).toHaveURL('http://localhost:4200/');
   });
 
-
+//TEST 7
 test('Test 7: Click sulla mappa da utente loggato apre la modale "Aggiungi Gatto"', async ({ page }) => {
     // Login
     await page.goto('http://localhost:4200/login');
