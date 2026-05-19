@@ -3,7 +3,7 @@
 **University of Naples Federico II**
 *Web Technologies Project | Developed by: Luigi Ariola - Student ID: N86003483*
 
-StreetCats is a modern, full-stack Single Page Application (SPA) designed to report, monitor, and track stray cat sightings on an interactive map.
+StreetCats is a modern, full-stack Single Page Application designed to report, monitor, and track stray cat sightings on an interactive map.
 
 ---
 
