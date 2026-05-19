@@ -14,13 +14,13 @@ import { RouterModule } from '@angular/router';
   styleUrl: './comment-section.component.css'
 })
 export class CommentSectionComponent implements OnInit {
-  // 1. INPUT: L'ID del gatto passato dal padre
+  //  INPUT: L'ID del gatto passato dal padre, questo componente non puo esistere se il padre non gli passa un catId valido
   catId = input.required<number>();
 
   // La lista dei commenti che aggiornata reattivamente tramite i signal
   comments = signal<Comment[]>([]);
 
-  // DIPENDENZE E FORM
+  // DIPENDENZE E FORM, utilizzo dei reactive form per gestire il form dei commenti, e inietto i servizi necessari
   private commentService = inject(CommentService);
   authService = inject(AuthService); // Pubblico così l'HTML può leggere il currentUser()
   private fb = inject(FormBuilder);

@@ -7,10 +7,11 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class CatService {
-  private apiUrl = 'http://localhost:3000/api/cats';
+private apiUrl = `${environment.apiUrl}/cats`;
 
   constructor(private http: HttpClient) { }
 
+//sfrutto i Generics, il metodo restituisce un Observable di un array di Cat
   getCats(): Observable<Cat[]> {
     return this.http.get<Cat[]>(this.apiUrl);
   }

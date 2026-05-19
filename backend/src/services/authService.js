@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const { pool } = require('../config/db');
 const jwt = require('jsonwebtoken');
 const authRepo = require('../repositories/authRepository'); 
 
@@ -40,7 +39,7 @@ if (!user) {
 
  //creamo un token JWT
   const token = jwt.sign(
-    {userId: user.id, username: user.username}, //dati da inserire nel token
+    {userId: user.id, username: user.username}, //dati da inserire nel token (dati sicuri, non la password)
     process.env.JWT_SECRET, //chiave segreta per firmare il token in setInterval
     {expiresIn: '24h'} //scadenza del token
   );

@@ -14,6 +14,10 @@ import { CommentSectionComponent } from '../comment-section/comment-section.comp
 })
 export class CatDetailModalComponent {
   // gatto da visualizzare
+  //una funzione input(). Questo trasforma la proprietà in un Read-Only Signal,
+  //garantendo che qualsiasi variazione del gatto selezionato sulla mappa si propaghi istantaneamente
+  //e in modo reattivo all'interno della modale
+
   cat = input<Cat | null>(null);
 
   // evento per chiudere il modal

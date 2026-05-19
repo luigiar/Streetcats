@@ -4,6 +4,8 @@ import { Observable, tap } from 'rxjs';
 import { AuthResponse, User } from '../models/auth.model';
 import { environment } from '../../environments/environment';
 
+//classe signleton, una unica istanza per tutta l'app, gestisce autenticazione e stato utente
+//decoratore di confiugrazione del servizio, disponibile in tutta l'app
 @Injectable({
 providedIn: 'root'
 })

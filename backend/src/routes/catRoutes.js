@@ -9,6 +9,8 @@ const upload = require('../config/multer');
 
 router.get('/', getCats);
 
+//chiamata a protect per verficare se l'utente è autenticato, poi upload.single('image') 
+//per gestire il caricamento dell'immagine e infine createCat per creare un nuovo gatto
 router.post('/', protect, upload.single('image'), createCat);
 
 module.exports = router;

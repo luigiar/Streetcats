@@ -58,9 +58,11 @@ export class HomeComponent {
 
   onMapReady(map: LeafletMap) {
     console.log('🟢 La mappa è pronta! Sto per chiamare il server...');
+    //riferimento all'oggetto mappa
     this.map = map;
     this.caricaGatti();
 
+    //event listener per i click sulla mappa delegando la logica a gestisciClicMappa
     this.map.on('click', (evento: any) => this.gestisciClicMappa(evento));
   }
 
@@ -154,6 +156,7 @@ chiudiAlert() {
     formData.append('longitude', datiGatto.longitude.toString());
     formData.append('image', datiGatto.image);
 
+  //invio l'oggetto di tipo formData al catService che si occuperà di inviarlo al backend
     this.catService.addCat(formData).subscribe({
       next:(nuovoGattoSalvato) => {
       console.log('✅ Nuovo gatto salvato con successo!', nuovoGattoSalvato);
