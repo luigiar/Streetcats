@@ -2,8 +2,8 @@
 
 ![StreetCats App Screen](screenshot.png)
 **University of Naples Federico II**
-*Web Technologies Project | Developed by: Luigi Ariola -
-StreetCats is a modern, full-stack Single Page Application (SPA) designed to report, monitor, and track stray cat sightings on an interactive map.
+*Web Technologies Project | Developed by: Luigi Ariola*
+StreetCats is a modern, full-stack Single Page Application designed to report, monitor, and track stray cat sightings on an interactive map.
 
 ---
 
@@ -12,7 +12,7 @@ StreetCats is a modern, full-stack Single Page Application (SPA) designed to rep
 - **Frontend:** Angular 19
 - **Backend:** Node.js with Express.js framework
 - **Database:** PostgreSQL
-- **Maps & Geocoding:** Leaflet, OpenStreetMap Tile Layers, and OpenStreetMap Nominatim APIs (direct and reverse geocoding).
+- **Maps & Geocoding:** Leaflet, OpenStreetMap Tile Layers, and OpenStreetMap Nominatim APIs
 - **Styling:** Bootstrap 5
 
 ---
@@ -21,8 +21,8 @@ StreetCats is a modern, full-stack Single Page Application (SPA) designed to rep
 
 The backend implements some security Features
 
-- **Authentication:** Stateless architecture using JSON Web Tokens (JWT) handled via functional HTTP Interceptors on the client. Passwords are salted and hashed using **bcrypt**.
-- **SQL Injection:** Fully prevented by utilizing exclusive parameterized queries at the Repository layer.
+- **Authentication:** Stateless architecture using JSON Web Tokens handled via functional HTTP Interceptors on the client. Passwords are salted and hashed using **bcrypt**.
+- **SQL Injection:** Fully prevented by utilizing parameterized queries at the Repository layer.
 - **Stored XSS:** Global sanitization middleware that cleanses input payloads before database persistence.
 - **Brute Force & DoS:** Strict rate-limiting on the login endpoint (blocks the client IP for 15 minutes after 5 failed attempts).
 - **CORS:** Restrictive Cross-Origin Resource Sharing policy based on an allowed origin whitelist.
@@ -44,7 +44,7 @@ The application's stability and resilience are validated continuously through tw
 
 Make sure you have the following installed locally:
 
-- **Node.js** (v18+)
+- **Node.js** 
 - **PostgreSQL** & **pgAdmin 4**
 
 ### 1. Database Setup
