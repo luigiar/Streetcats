@@ -1,6 +1,8 @@
 # 🐾 StreetCats - Full-Stack Web Application
 
-![StreetCats App Screen](screenshot.png)
+| Main Dashboard & Map | Add New Sighting Form |
+| :---: | :---: |
+| ![Dashboard](screenshot1.png) | ![Add Form](screenshot2.png) |
 **University of Naples Federico II**
 *Web Technologies Project | Developed by: Luigi Ariola*
 StreetCats is a modern, full-stack Single Page Application designed to report, monitor, and track stray cat sightings on an interactive map.
