@@ -1,11 +1,17 @@
 # 🐾 StreetCats - Full-Stack Web Application
 
+**University of Naples Federico II**
+*Web Technologies Project | Developed by: Luigi Ariola - Student ID: N86003483*
+
+StreetCats is a modern, full-stack Single Page Application (SPA) designed to report, monitor, and track stray cat sightings on an interactive map.
+
+---
+
+## Screenshots
+
 | Main Dashboard & Map | Add New Sighting Form |
 | :---: | :---: |
 | ![Dashboard](screenshot1.png) | ![Add Form](screenshot2.png) |
-**University of Naples Federico II**
-*Web Technologies Project | Developed by: Luigi Ariola*
-StreetCats is a modern, full-stack Single Page Application designed to report, monitor, and track stray cat sightings on an interactive map.
 
 ---
 
@@ -46,7 +52,7 @@ The application's stability and resilience are validated continuously through tw
 
 Make sure you have the following installed locally:
 
-- **Node.js** 
+- **Node.js**
 - **PostgreSQL** & **pgAdmin 4**
 
 ### 1. Database Setup
