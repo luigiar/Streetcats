@@ -33,7 +33,7 @@ The backend implements some security Features
 - **SQL Injection:** prevented by utilizing parameterized queries at the Repository layer.
 - **Stored XSS:** Global sanitization middleware that cleanses input payloads before database persistence.
 - **Brute Force & DoS:** Strict rate-limiting on the login endpoint (blocks the client IP for 15 minutes after 5 failed attempts).
-- **CORS:**
+- **CORS**
 
 ---
 
